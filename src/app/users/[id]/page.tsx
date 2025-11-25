@@ -31,7 +31,7 @@ function page() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/components">Users</BreadcrumbLink>
+            <BreadcrumbLink href="/users">Users</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -91,6 +91,24 @@ function page() {
               </HoverCard>
             </div>
           </div>
+
+          {/* USER CARDS CONTAINER */}
+          <div className="bg-primary-foreground p-4 rounded-lg space-y-2">
+            <div className="flex items-center gap-2">
+              <Avatar className="size-12">
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <h1 className="text-xl font-semibold ">John Doe</h1>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+
           {/* USER INFORMATION CONTAINER */}
           <div className="bg-primary-foreground p-4 rounded-lg">
             <div className="flex justify-between items-center">
@@ -110,7 +128,7 @@ function page() {
                 <Progress value={63} />
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-bold">Username:</span>
+                <span className="font-bold">Full Name:</span>
                 <span>John Doe</span>
               </div>
               <div className="flex items-center gap-2">
@@ -122,41 +140,33 @@ function page() {
                 <span>+237645678901</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-bold">Location:</span>
-                <span> Bonamoussadi, Douala, CMR</span>
+                <span className="font-bold">Address:</span>
+                <span> Bonamoussadi, Carrefour des immeubles</span>
               </div>
               <div className="flex items-center gap-2">
+                <span className="font-bold">City:</span>
+                <span> Douala</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold">Delivery Address:</span>
+                <span> Bonamoussadi, Carrefour des immeubles</span>
+              </div>
+              {/* <div className="flex items-center gap-2">
                 <span className="font-bold">Role:</span>
                 <Badge> Admin</Badge>
-              </div>
+              </div> */}
             </div>
             <p className="text-sm text-muted-foreground mt-4">
               Joined on 2025.11.25
             </p>
           </div>
           {/* CARD LIST CONTAINER */}
-          <div className="bg-primary-foreground p-4 rounded-lg">
+          {/* <div className="bg-primary-foreground p-4 rounded-lg">
             <CardList title="Recent Transactions" />
-          </div>
+          </div> */}
         </div>
         {/* RIGHT SIDE */}
         <div className="w-full xl:w-2/3 space-y-6">
-          {/* USER CARDS CONTAINER */}
-          <div className="bg-primary-foreground p-4 rounded-lg space-y-2">
-            <div className="flex items-center gap-2">
-              <Avatar className="size-12">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <h1 className="text-xl font-semibold ">John Doe</h1>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
           {/* CHART CONTAINER */}
           <div className="bg-primary-foreground p-4 rounded-lg">
             <h1 className="text-xl font-semibold ">User Activity</h1>

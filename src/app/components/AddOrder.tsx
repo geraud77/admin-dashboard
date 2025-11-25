@@ -20,13 +20,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 
 const formSchema = z.object({
   fullName: z
@@ -46,7 +39,7 @@ const formSchema = z.object({
   // role: z.enum(["admin", "user"], { message: "Role is required!" }),
 });
 
-function EditUser() {
+function AddOrder() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -67,7 +60,7 @@ function EditUser() {
   return (
     <SheetContent>
       <SheetHeader>
-        <SheetTitle>Edit User</SheetTitle>
+        <SheetTitle>Add Order</SheetTitle>
         <SheetDescription asChild>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -193,4 +186,4 @@ function EditUser() {
   );
 }
 
-export default EditUser;
+export default AddOrder;

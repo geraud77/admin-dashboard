@@ -14,17 +14,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
-
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "Pending" | "processing" | "Success" | "Failed";
-  FullName: string;
-  userId: string;
-  email: string;
+import Image from "next/image";
+export type Product = {
+  id: number | string;
+  price: number;
+  ShortDescription: string;
+  Description: string;
+  Sizes: string[];
+  Colors: string[];
+  images: Record<string, string>;
+  name: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,61 +45,53 @@ export const columns: ColumnDef<Payment>[] = [
       />
     ),
   },
+
   {
-    accessorKey: "FullName",
-    header: "User",
+    accessorKey: "image",
+    header: "Image",
+    cell: ({ row }) => {
+      const product = row.original;
+      return (
+        <div className="relative size-9">
+          <Image
+            src={product.images[product.Colors[0]]}
+            alt={product.name}
+            fill
+            className="rounded-full object-cover"
+          />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
   },
 
   {
-    accessorKey: "email",
+    accessorKey: "price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
-  {
-    accessorKey: "status",
-    header: () => <div className="text-left">Status</div>,
-    cell: ({ row }) => {
-      const status = row.getValue("status");
-      return (
-        <div
-          className={cn(
-            `p-1 rounded-md w-max text-xs`,
-            status === "Pending" && "text-yellow-500 bg-yellow-500/40",
-            status === "Success" && "text-green-500 bg-green-500/40",
-            status === "Failed" && "text-red-500 bg-red-500/40"
-          )}
-        >
-          {status as string}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "XOF",
-      }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
+  {
+    accessorKey: "ShortDescription",
+    header: "Description",
   },
+
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const product = row.original;
 
       return (
         <DropdownMenu>
@@ -110,16 +104,17 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(product.id.toString())
+              }
             >
-              Copy payment ID
+              Copy product ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               {" "}
-              <Link href={`/users/${payment.userId}`}>View customer</Link>
+              <Link href={`/products/${product.id}`}>View product</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -14,17 +14,16 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
-
-export type Payment = {
+import Image from "next/image";
+export type User = {
   id: string;
-  amount: number;
-  status: "Pending" | "processing" | "Success" | "Failed";
+  status: "active" | "inactive";
   FullName: string;
-  userId: string;
+  avatar: string;
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,6 +42,24 @@ export const columns: ColumnDef<Payment>[] = [
       />
     ),
   },
+  {
+    accessorKey: "avatar",
+    header: "Avatar",
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="relative size-9">
+          <Image
+            src={user.avatar}
+            alt={user.FullName}
+            fill
+            className="rounded-full object-cover"
+          />
+        </div>
+      );
+    },
+  },
+
   {
     accessorKey: "FullName",
     header: "User",
@@ -71,9 +88,9 @@ export const columns: ColumnDef<Payment>[] = [
         <div
           className={cn(
             `p-1 rounded-md w-max text-xs`,
-            status === "Pending" && "text-yellow-500 bg-yellow-500/40",
-            status === "Success" && "text-green-500 bg-green-500/40",
-            status === "Failed" && "text-red-500 bg-red-500/40"
+
+            status === "active" && "text-green-500 bg-green-500/40",
+            status === "inactive" && "text-red-500 bg-red-500/40"
           )}
         >
           {status as string}
@@ -81,23 +98,11 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "XOF",
-      }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -110,16 +115,15 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(user.id)}
             >
-              Copy payment ID
+              Copy user ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               {" "}
-              <Link href={`/users/${payment.userId}`}>View customer</Link>
+              <Link href={`/users/${user.id}`}>View customer</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
             className="flex items-center m-4 gap-2 px-2 cursor-pointer bg-red-900 hover:bg-red-500 text-white"
           >
             <Trash2 className="h-4 w-4" />
-            Delete Payment(s)
+            Delete Product(s)
           </Button>
         </div>
       )}
